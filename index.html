@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laksindu Janith</title>
+    <link rel="icon" href="icon.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 24px;
+            margin-bottom: 24px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1f6feb 0%, #0969da 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+            border: 1px solid #30363d;
+        }
+
+        .profile-info h1 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .profile-info .username {
+            font-size: 20px;
+            font-weight: 300;
+            color: #7d8590;
+            margin-bottom: 16px;
+        }
+
+        .profile-info .bio {
+            font-size: 14px;
+            margin-bottom: 16px;
+            color: #e6edf3;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: #7d8590;
+        }
+
+        .profile-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Navigation */
+        nav {
+            border-bottom: 1px solid #30363d;
+            margin-bottom: 24px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 8px 16px;
+            background: none;
+            border: none;
+            color: #7d8590;
+            cursor: pointer;
+            font-size: 14px;
+            position: relative;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            color: #e6edf3;
+            border-bottom-color: #30363d;
+        }
+
+        .nav-tab.active {
+            color: #e6edf3;
+            border-bottom-color: #f78166;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        /* Project Cards - GitHub Repo Style */
+        .projects-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .project-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .project-card:hover {
+            border-color: #7d8590;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .project-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #539bf5;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-title:hover {
+            text-decoration: underline;
+        }
+
+        .project-visibility {
+            font-size: 12px;
+            padding: 2px 8px;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            color: #7d8590;
+        }
+
+        .project-description {
+            font-size: 12px;
+            color: #7d8590;
+            margin-bottom: 12px;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 12px;
+            color: #7d8590;
+        }
+
+        .project-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .lang-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .lang-cpp { background: #f34b7d; }
+        .lang-python { background: #3572A5; }
+        .lang-js { background: #f1e05a; }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-category {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .skill-category h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .skill-item {
+            font-size: 12px;
+            color: #7d8590;
+            padding: 4px 0;
+        }
+
+        .skill-item::before {
+            content: "▸";
+            margin-right: 8px;
+            color: #539bf5;
+        }
+
+        /* Contact Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .contact-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .contact-card:hover {
+            border-color: #7d8590;
+        }
+
+        .contact-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .contact-card p {
+            font-size: 12px;
+            color: #539bf5;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #30363d;
+            text-align: center;
+            color: #7d8590;
+            font-size: 12px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .badge-active {
+            background: #1a7f37;
+            color: #fff;
+        }
+
+        .badge-completed {
+            background: #1f6feb;
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+            }
+
+            .avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+        }
+        .avatar img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%; /* Makes the image circular */
+        object-fit: cover; /* Ensures the image covers the circle without distortion */
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="profile-header">
+                <div class="avatar"><img src="https://avatars.githubusercontent.com/u/179482231?v=4"></div>
+                <div class="profile-info">
+                    <h1>Laksindu Janith</h1>
+                    <p class="username">iot-developer</p>
+                    <p class="bio">Specialized in IoT systems, embedded development, and smart device integration</p>
+                    <div class="profile-stats">
+                        <span>Available for projects</span>
+                        <span>4 projects</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="switchTab('overview', this)">IOT Projects</button>
+                <button class="nav-tab" onclick="switchTab('projects', this)">Others</button>
+                <button class="nav-tab" onclick="switchTab('skills', this)">Skills</button>
+                <button class="nav-tab" onclick="switchTab('contact', this)">Contact</button>
+            </div>
+        </nav>
+
+        <!-- Overview Section -->
+        <section id="overview" class="content-section active">
+            <h2 class="section-title">About</h2>
+            <div style="background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 16px; margin-bottom: 24px;">
+                <p style="font-size: 14px; line-height: 1.6;">
+                    IoT developer focused on building smart, secure, and reliable connected systems. Experienced in embedded devices, cloud integration, and full IoT solutions.
+                </p>
+            </div>
+
+            <h2 class="section-title">IOT Projects</h2>
+            <div class="projects-list">
+                <div class="project-card">
+                    <div class="project-header">
+                        <a href="https://github.com/laksindu/Xvera.git" class="project-title">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+                            </svg>
+                            XveraHome ( Smart Home Automation System )
+                        </a>
+                        <span class="badge badge-active">Active</span>
+                    </div>
+                    <p class="project-description">
+                        A complete home automation system with sensor integration and a mobile app. It controls lighting and temperature, supports time-based and temperature-based automation, and works fully offline.                    </p>
+                    <div class="project-meta">
+                        <span><span class="lang-dot lang-cpp"></span> C++</span>
+                        <span>MQTT</span>
+                        <span>HTTP</span>
+                        <span>Firebase</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="content-section">
+            <h2 class="section-title">Other Projects</h2>
+            <div class="projects-list">
+                <div class="project-card">
+                    <div class="project-header">
+                        <a href="https://github.com/laksindu/XveraHome.git" class="project-title">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+                            </svg>
+                            XveraHome app
+                        </a>
+                        <span class="badge badge-active">Active</span>
+                    </div>
+                    <p class="project-description">
+                        An IoT mobile application designed to control Xvera Home devices with a user-friendly interface.                    </p>
+                    <div class="project-meta">
+                        <span><span class="lang-dot lang-js"></span> JavaScript</span>
+                        <span>React Native</span>
+                        <span>MQTT</span>
+                        <span>HTTP</span>
+                        <span>Firebase</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <a href="https://github.com/laksindu/ESPVera.git" class="project-title">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+                            </svg>
+                            ESPVera
+                        </a>
+                        <span class="badge badge-active">Active</span>
+                    </div>
+                    <p class="project-description">
+                        ESP Wi-Fi configuration library that allows developers to create fully custom Wi-Fi setup UIs for ESP projects.
+                    </p>
+                    <div class="project-meta">
+                        <span><span class="lang-dot lang-cpp"></span>  C++</span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <a href="https://github.com/laksindu/SkyBridge.git" class="project-title">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+                            </svg>
+                            SkyBridge — Open Source Local File Server
+                        </a>
+                        <span class="project-visibility">Completed</span>
+                    </div>
+                    <p class="project-description">
+                        SkyBridge is a lightweight Flask-based file server that lets you use any computer even old ones as a simple file server accessible from any device on your local network.
+                    </p>
+                    <div class="project-meta">
+                        <span><span class="lang-dot lang-python"></span> Python</span>
+                        <span>Updated on Oct 22, 2025</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="content-section">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>IoT Hardware</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">ESP32 / ESP8266</div>
+                        <div class="skill-item">Arduino / ATmega</div>
+                        <div class="skill-item">Sensors</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Programming</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">C++</div>
+                        <div class="skill-item">JavaScript</div>
+                        <div class="skill-item">Python</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Protocols & Communication</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">MQTT / HTTP / WebSocket</div>
+                        <div class="skill-item">Wi-Fi / Bluetooth</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Others</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">MQTT Broker (Mosquitto)</div>
+                        <div class="skill-item">React Native</div>
+                        <div class="skill-item">Firebase</div>
+                        <div class="skill-item">PCB Design</div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Git / GitHub</div>
+                        <div class="skill-item">Arduino IDE</div>
+                        <div class="skill-item">EsayEDA</div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="content-section">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <a href="mailto:laksindujanith18104@gmail.com" class="contact-card">
+                    <h3>Email</h3>
+                    <p>laksindujanith18104@gmail.com</p>
+                </a>
+
+                <a href="https://github.com/laksindu" class="contact-card" target="_blank">
+                    <h3>GitHub</h3>
+                    <p>https://github.com/laksindu</p>
+                </a>
+
+                <a href="tel:+94762653429" class="contact-card">
+                    <h3>Phone</h3>
+                    <p>+94 76 265 3429</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2026 Laksindu Janith</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchTab(tabName, element) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab
+            element.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
